@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Admission Form</title>
+<link rel="stylesheet" href="Admission.css">
+<style>
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #ff6b6b;
+   
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.form-box {
+    background-color: #f9e3e3;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    width: 600px;
+}
+
+.form-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #ff6b6b;
+    text-align: center;
+}
+
+.form {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.form-group {
+    flex: 0 0 48%;
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="tel"],
+.form-group input[type="number"],
+.form-group select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+.form-group select {
+    padding: 10px 20px;
+}
+
+.btn-field {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.btn-field button {
+    width: 48%;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.btn-field button.submit {
+    background-color: #ff6b6b;
+    color: #fff;
+}
+
+.btn-field button.cancel {
+    background-color: #ccc;
+    color: #333;
+}
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="form-box">
+        <h1 class="form-title" id="formTitle">Admission Form</h1>
+        <div class="language-selection">
+            <button onclick="setLanguage('en')">English</button>
+            <button onclick="setLanguage('fr')">French</button>
+            <button onclick="setLanguage('zh')">Chinese</button>
+        </div>
+        <form class="form" action="sendConfirmationEmail" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="name" id="nameLabel">Full Name:</label>
+                <input type="text" id="name" name="names" required>
+            </div>
+            <div class="form-group">
+                <label for="gender" id="genderLabel">Gender:</label>
+                <select id="gender" name="gender" required>
+                    <option value="">Select</option>
+                    <option value="male" id="maleOption">Male</option>
+                    <option value="female" id="femaleOption">Female</option>
+                    <option value="other" id="otherOption">Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="age" id="ageLabel">Age:</label>
+                <input type="number" id="age" name="age" required>
+            </div>
+            <div class="form-group">
+                <label for="email" id="emailLabel">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="phone" id="phoneLabel">Phone Number:</label>
+                <input type="tel" id="phone" name="phone" required>
+            </div>
+            <div class="form-group">
+                <label for="guardian" id="guardianLabel">Guardian's Name:</label>
+                <input type="text" id="guardian" name="guardian" required>
+            </div>
+            <div class="form-group">
+                <label for="previousSchool" id="previousSchoolLabel">Previous School:</label>
+                <input type="text" id="previousSchool" name="previousSchool" required>
+            </div>
+            <div class="form-group">
+                <label for="idNumber" id="idNumberLabel">ID Number:</label>
+                <input type="text" id="idNumber" name="idNumber" required>
+            </div>
+            <div class="form-group">
+                <label for="picture" id="pictureLabel">Passport Picture (jpg/png):</label>
+                <input type="file" id="picture" name="picture" accept="image/jpeg, image/png" required>
+            </div>
+            <div class="form-group">
+                <label for="diploma" id="diplomaLabel">Certificates (PDF):</label>
+                <input type="file" id="diploma" name="diploma" accept="application/pdf" required>
+            </div>
+            <div class="btn-field">
+                <button type="submit" class="submit" id="submitButton">Submit</button>
+                <button type="button" class="cancel" onclick="window.location.href='cancel.html'" id="cancelButton">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+// Language data
+const languageData = {
+    en: {
+        formTitle: "Admission Form",
+        nameLabel: "Full Name:",
+        genderLabel: "Gender:",
+        maleOption: "Male",
+        femaleOption: "Female",
+        otherOption: "Other",
+        ageLabel: "Age:",
+        emailLabel: "Email:",
+        phoneLabel: "Phone Number:",
+        guardianLabel: "Guardian's Name:",
+        previousSchoolLabel: "Previous School:",
+        idNumberLabel: "ID Number:",
+        pictureLabel: "Passport Picture (jpg/png):",
+        diplomaLabel: "Certificates (PDF):",
+        submitButton: "Submit",
+        cancelButton: "Cancel",
+        selectOption: "Select",
+        chooseFile: "Choose file",
+        noFileChosen: "No file chosen"
+    },
+    fr: {
+        formTitle: "Formulaire d'admission",
+        nameLabel: "Nom complet :",
+        genderLabel: "Genre :",
+        maleOption: "Homme",
+        femaleOption: "Femme",
+        otherOption: "Autre",
+        ageLabel: "Âge :",
+        emailLabel: "Email :",
+        phoneLabel: "Numéro de téléphone :",
+        guardianLabel: "Nom du tuteur :",
+        previousSchoolLabel: "École précédente :",
+        idNumberLabel: "Numéro d'identification :",
+        pictureLabel: "Photo de passeport (jpg/png) :",
+        diplomaLabel: "Certificats (PDF) :",
+        submitButton: "Soumettre",
+        cancelButton: "Annuler",
+        selectOption: "Sélectionner",
+        chooseFile: "Choisir un fichier",
+        noFileChosen: "Aucun fichier choisi"
+    },
+    zh: {
+        formTitle: "入学申请表",
+        nameLabel: "全名：",
+        genderLabel: "性别：",
+        maleOption: "男",
+        femaleOption: "女",
+        otherOption: "其他",
+        ageLabel: "年龄：",
+        emailLabel: "邮箱：",
+        phoneLabel: "电话号码：",
+        guardianLabel: "监护人姓名：",
+        previousSchoolLabel: "就读学校：",
+        idNumberLabel: "证号码：",
+        pictureLabel: "护照照片 (jpg/png)：",
+        diplomaLabel: "证书 (PDF)：",
+        submitButton: "提交",
+        cancelButton: "取消",
+        selectOption: "选择",
+        chooseFile: "选择文件",
+        noFileChosen: "未选择文件"
+    }
+};
+
+// Function to set language based on selection
+function setLanguage(language) {
+    const data = languageData[language];
+    document.getElementById("formTitle").textContent = data.formTitle;
+    document.getElementById("nameLabel").textContent = data.nameLabel;
+    document.getElementById("genderLabel").textContent = data.genderLabel;
+    document.getElementById("maleOption").textContent = data.maleOption;
+    document.getElementById("femaleOption").textContent = data.femaleOption;
+    document.getElementById("otherOption").textContent = data.otherOption;
+    document.getElementById("ageLabel").textContent = data.ageLabel;
+    document.getElementById("emailLabel").textContent = data.emailLabel;
+    document.getElementById("phoneLabel").textContent = data.phoneLabel;
+    document.getElementById("guardianLabel").textContent = data.guardianLabel;
+    document.getElementById("previousSchoolLabel").textContent = data.previousSchoolLabel;
+    document.getElementById("idNumberLabel").textContent = data.idNumberLabel;
+    document.getElementById("pictureLabel").textContent = data.pictureLabel;
+    document.getElementById("diplomaLabel").textContent = data.diplomaLabel;
+    document.getElementById("submitButton").textContent = data.submitButton;
+    document.getElementById("cancelButton").textContent = data.cancelButton;
+
+    // Translate select, choose file, no file chosen
+    const selectElements = document.querySelectorAll("select");
+    selectElements.forEach(select => {
+        select.options[0].textContent = data.selectOption;
+    });
+
+    const fileInputElements = document.querySelectorAll("input[type='file']");
+    fileInputElements.forEach(fileInput => {
+        fileInput.nextElementSibling.textContent = data.chooseFile;
+        fileInput.addEventListener("change", function() {
+            if (this.files.length > 0) {
+                fileInput.nextElementSibling.textContent = this.files[0].name;
+            } else {
+                fileInput.nextElementSibling.textContent = data.noFileChosen;
+            }
+        });
+    });
+}
+
+// Set English as default language
+setLanguage('en');
+</script>
+
+
+</body>
+</html>
